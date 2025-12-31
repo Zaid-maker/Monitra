@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, Plus, Play, Pause, Trash2, Globe, Activity, ShieldCheck, User } from 'lucide-react';
+import { Plus, Pause, Trash2, Activity, ShieldCheck, User } from 'lucide-react';
 import { authService } from './services/auth';
 
 function App() {
