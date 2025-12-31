@@ -1,0 +1,13 @@
+{
+    "name": "@monitra/database",
+    "version": "0.0.0",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "dependencies": {
+        "mongoose": "^8.9.3"
+    },
+    "devDependencies": {
+        "@monitra/typescript-config": "workspace:*",
+        "typescript": "5.9.2"
+    }
+}

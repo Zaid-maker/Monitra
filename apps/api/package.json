@@ -1,0 +1,24 @@
+{
+    "name": "@monitra/api",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "bun --watch src/index.ts",
+        "build": "bun build ./src/index.ts --outdir ./dist",
+        "start": "bun src/index.ts"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.1",
+        "http-proxy-middleware": "^2.0.6",
+        "socket.io": "^4.7.4",
+        "jsonwebtoken": "^9.0.2"
+    },
+    "devDependencies": {
+        "@monitra/typescript-config": "workspace:*",
+        "@types/express": "^4.17.21",
+        "@types/cors": "^2.8.17",
+        "typescript": "5.9.2"
+    }
+}

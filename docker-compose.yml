@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - MONITOR_SERVICE_URL=http://monitor-service:3002
+      - MONGODB_URI=mongodb://mongodb:27017/monitra
+    depends_on:
+      - mongodb
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: services/auth/Dockerfile
+    environment:
+      - PORT=3001
+      - MONGODB_URI=mongodb://mongodb:27017/monitra
+      - JWT_SECRET=supersecret
+    depends_on:
+      - mongodb
+
+  monitor-service:
+    build:
+      context: .
+      dockerfile: services/monitor/Dockerfile
+    environment:
+      - PORT=3002
+      - MONGODB_URI=mongodb://mongodb:27017/monitra
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification/Dockerfile
+    environment:
+      - PORT=3003
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - api-gateway
+
+volumes:
+  mongodb_data:
