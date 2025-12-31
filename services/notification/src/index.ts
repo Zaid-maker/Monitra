@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Worker to process notifications
-const worker = new Worker('notification-tasks', async (job: Job) => {
+new Worker('notification-tasks', async (job: Job) => {
     const { monitorName, status, email, url, message } = job.data;
 
     console.log(`Sending notification for ${monitorName}: ${status}`);

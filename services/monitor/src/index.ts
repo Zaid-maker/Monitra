@@ -78,7 +78,7 @@ app.get('/monitors/stats/:monitorId', async (req, res) => {
 });
 
 // Worker to process monitoring
-const worker = new Worker('monitor-tasks', async (job: Job) => {
+new Worker('monitor-tasks', async (job: Job) => {
     const { monitorId } = job.data;
     const monitor = await Monitor.findById(monitorId).populate('userId');
     if (!monitor || !monitor.isActive) return;
